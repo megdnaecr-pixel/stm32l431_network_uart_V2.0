@@ -1,17 +1,21 @@
-# STM32L431 Network UART V2.0
+# STM32L431 Network CAN V2.0
 
-Firmware for the **STM32L431CC** microcontroller that acts as a CAN-bus command relay node. It receives framed commands over CAN, validates them with CRC-16, drives a GPIO output accordingly, and sends an ACK back on the bus.
+Firmware for the **STM32L431CC** microcontroller that acts as a CAN-bus command relay node. It receives framed commands over CAN, validates them with CRC-16, drives GPIO outputs accordingly, and sends an ACK back on the bus.
 
 ## Hardware
 
 | Peripheral | Pins | Notes |
 |------------|------|-------|
-| CAN1 | PB8 (RX), PB9 (TX) | 500 kbps, standard frames |
-| USART2 | PA2 (TX), PA3 (RX) | 115200 baud, DMA-backed |
-| USART3 | PB10 (TX), PB11 (RX) | 115200 baud |
-| LED1 | PB6 | Command status indicator |
+| CAN1 | PB8 (RX), PB9 (TX) | 500 kbps, standard frames, via UT82 transceiver |
+| GPIO1 | PA9 | Output channel 1 |
+| GPIO2 | PA10 | Output channel 2 |
+| GPIO3 | PA4 | Output channel 3 |
+| GPIO4 | PA5 | Output channel 4 |
+| LED1 | PB6 | Output channel 5 / status indicator |
 
-System clock: 80 MHz (HSI 16 MHz + PLL).
+- CAN transceiver: VATU501/CM_118 with ESD protection (BSD5C051V) and common-mode choke (DLW43MH201XK2L)
+- Power: 28V -> 5V buck (MP62051) -> 3.3V LDO (MAX6219)
+- System clock: 80 MHz (HSI 16 MHz + PLL)
 
 ## Protocol
 
@@ -27,19 +31,15 @@ Every CAN frame carries a 5-byte payload:
 
 ### Supported commands
 
-| Command | Value | Action |
-|---------|-------|--------|
-| CMD_1_On / CMD_1_Off | 0x01 / 0x02 | Channel 1 control |
-| CMD_2_On / CMD_2_Off | 0x03 / 0x04 | Channel 2 control |
-| CMD_3_On / CMD_3_Off | 0x05 / 0x06 | Channel 3 control |
-| CMD_4_On / CMD_4_Off | 0x07 / 0x08 | Channel 4 control |
-| CMD_5_On / CMD_5_Off | 0x09 / 0x0A | Channel 5 control |
-| CMD_6_On / CMD_6_Off | 0x0B / 0x0C | Channel 6 control |
-| CMD_7_On / CMD_7_Off | 0x0E / 0x0D | Channel 7 control |
-| CMD_8_Off | 0x0F | Channel 8 off-only |
-| CMD_9_On / CMD_9_Off | 0x11 / 0x10 | Channel 9 control |
+| Command | Value | Output Pin | Action |
+|---------|-------|-----------|--------|
+| CMD_1_On / CMD_1_Off | 0x01 / 0x02 | GPIO1 (PA9) | Channel 1 on/off |
+| CMD_2_On / CMD_2_Off | 0x03 / 0x04 | GPIO2 (PA10) | Channel 2 on/off |
+| CMD_3_On / CMD_3_Off | 0x05 / 0x06 | GPIO3 (PA4) | Channel 3 on/off |
+| CMD_4_On / CMD_4_Off | 0x07 / 0x08 | GPIO4 (PA5) | Channel 4 on/off |
+| CMD_5_On / CMD_5_Off | 0x09 / 0x0A | LED1 (PB6) | Channel 5 on/off |
 
-On commands set LED1 HIGH; Off commands set it LOW. After executing a command the node transmits an ACK frame (same protocol) on CAN ID `0x100`.
+On commands set the output HIGH; Off commands set it LOW. After executing a command the node transmits an ACK frame (same protocol) on CAN ID `0x100`.
 
 ## Testing
 

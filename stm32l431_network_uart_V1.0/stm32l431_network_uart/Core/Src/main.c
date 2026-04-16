@@ -80,56 +80,57 @@ char crc_Relay=0;
 
 static volatile uint8_t step_rudders= 0;
 volatile long RUD_byte_cnt=0;
-static volatile uint8_t g_last_cmd = 0;
-static volatile GPIO_PinState g_led_state = GPIO_PIN_RESET;
 
-static GPIO_PinState GetCommandOutputState(uint8_t cmd)
+/* --- Output channel table: maps each command pair to a GPIO --- */
+typedef struct {
+	GPIO_TypeDef *port;
+	uint16_t      pin;
+} OutputPin_t;
+
+static const OutputPin_t outputMap[NUM_OUTPUT_CHANNELS] = {
+	{ GPIO1_Port, GPIO1_Pin },   /* CMD_1 -> PA9  */
+	{ GPIO2_Port, GPIO2_Pin },   /* CMD_2 -> PA10 */
+	{ GPIO3_Port, GPIO3_Pin },   /* CMD_3 -> PA4  */
+	{ GPIO4_Port, GPIO4_Pin },   /* CMD_4 -> PA5  */
+	{ LED1_GPIO_Port, LED1_Pin },/* CMD_5 -> PB6  */
+};
+
+/**
+  * @brief  Execute a command: route On/Off to the correct GPIO output
+  */
+static void ExecuteCommand(uint8_t cmd)
 {
+	int ch = -1;               /* channel index into outputMap */
+	GPIO_PinState state;
+
 	switch (cmd)
 	{
-		case CMD_1_On:
-		case CMD_2_On:
-		case CMD_3_On:
-		case CMD_4_On:
-		case CMD_5_On:
-		case CMD_6_On:
-		case CMD_7_On:
-		case CMD_9_On:
-			return GPIO_PIN_SET;
-
-		case CMD_1_Off:
-		case CMD_2_Off:
-		case CMD_3_Off:
-		case CMD_4_Off:
-		case CMD_5_Off:
-		case CMD_6_Off:
-		case CMD_7_Off:
-		case CMD_8_Off:
-		case CMD_9_Off:
-			return GPIO_PIN_RESET;
-
-		default:
-			return g_led_state;
+		case CMD_1_On:  ch = 0; state = GPIO_PIN_SET;   break;
+		case CMD_1_Off: ch = 0; state = GPIO_PIN_RESET; break;
+		case CMD_2_On:  ch = 1; state = GPIO_PIN_SET;   break;
+		case CMD_2_Off: ch = 1; state = GPIO_PIN_RESET; break;
+		case CMD_3_On:  ch = 2; state = GPIO_PIN_SET;   break;
+		case CMD_3_Off: ch = 2; state = GPIO_PIN_RESET; break;
+		case CMD_4_On:  ch = 3; state = GPIO_PIN_SET;   break;
+		case CMD_4_Off: ch = 3; state = GPIO_PIN_RESET; break;
+		case CMD_5_On:  ch = 4; state = GPIO_PIN_SET;   break;
+		case CMD_5_Off: ch = 4; state = GPIO_PIN_RESET; break;
+		default:        return;  /* unknown command -- ignore */
 	}
+
+	HAL_GPIO_WritePin(outputMap[ch].port, outputMap[ch].pin, state);
 }
 
-void SetDriverBoxCmd(unsigned char cmdMode)
-{
-	g_last_cmd = cmdMode;
-	g_led_state = GetCommandOutputState(cmdMode);
-	HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, g_led_state);
-}
-
-void GPIO_Set_Action()
+void GPIO_Set_Action(void)
 {
 	for (int i=0;i<5;++i)
 	{
 		GP.bytes[i]=Relay_BUF[i];
 	}
 
-	SetDriverBoxCmd(GP.data.CMD);
+	ExecuteCommand(GP.data.CMD);
 
-	/* إرسال ACK عبر CAN بنفس بايت الأمر */
+	/* Send ACK back on CAN with same command byte */
 	CAN_SendProtocolMsg(GP.data.CMD);
 }
 
@@ -282,14 +283,7 @@ void CAN_SendProtocolMsg(uint8_t cmd)
 	txHeader.DLC                = 5;
 	txHeader.TransmitGlobalTime = DISABLE;
 
-	/* مؤشر إرسال CAN على LED1: وميض مرئي حتى لو حالة الأمر كانت مضاءة أصلاً */
-	{
-		GPIO_PinState cmd_led = g_led_state;
-		HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin,
-		                  (cmd_led == GPIO_PIN_SET) ? GPIO_PIN_RESET : GPIO_PIN_SET);
-		HAL_CAN_AddTxMessage(&hcan1, &txHeader, txData, &txMailbox);
-		HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, cmd_led);
-	}
+	HAL_CAN_AddTxMessage(&hcan1, &txHeader, txData, &txMailbox);
 }
 /**
   * @brief  CAN RX FIFO0 message pending callback
