@@ -34,7 +34,7 @@ void MX_CAN1_Init(void)
 
   /* USER CODE END CAN1_Init 1 */
   hcan1.Instance = CAN1;
-  hcan1.Init.Prescaler = 4;           /* 32MHz / 4 / (1+13+2) = 500 kbps */
+  hcan1.Init.Prescaler = 10;          /* 80MHz / 10 / (1+13+2) = 500 kbps */
   hcan1.Init.Mode = CAN_MODE_NORMAL;
   hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
   hcan1.Init.TimeSeg1 = CAN_BS1_13TQ;
