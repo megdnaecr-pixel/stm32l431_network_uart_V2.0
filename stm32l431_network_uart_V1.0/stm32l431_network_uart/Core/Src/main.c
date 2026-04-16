@@ -75,13 +75,13 @@ union
 } GP;
 
 uint8_t Relay_BUF[5]={0};
-static unsigned char Relay_Index = 0;
+static volatile unsigned char Relay_Index = 0;
 char crc_Relay=0;
 
-static uint8_t step_rudders= 0;
-long RUD_byte_cnt=0;
-static uint8_t g_last_cmd = 0;
-static GPIO_PinState g_led_state = GPIO_PIN_RESET;
+static volatile uint8_t step_rudders= 0;
+volatile long RUD_byte_cnt=0;
+static volatile uint8_t g_last_cmd = 0;
+static volatile GPIO_PinState g_led_state = GPIO_PIN_RESET;
 
 static GPIO_PinState GetCommandOutputState(uint8_t cmd)
 {

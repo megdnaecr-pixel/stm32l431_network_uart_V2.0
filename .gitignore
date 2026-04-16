@@ -1,0 +1,19 @@
+# Build artifacts
+*.o
+*.d
+*.su
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+
+# IDE / editor
+.vscode/
+.settings/
+*.launch
+*.cfg
+
+# OS
+.DS_Store
+Thumbs.db
