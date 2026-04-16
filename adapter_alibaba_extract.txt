@@ -1,0 +1,67 @@
+================================================================================
+  استخراج مرجعي من صفحة Alibaba المحفوظة محليًا (للمحوّل USB↔CAN/LIN)
+  تاريخ الاستخراج: 2026-04-16
+  الملف المصدر: Usb To Can Analyzer Compatible With Lin Bus Debugger...
+================================================================================
+
+--- رابط المنتج على Alibaba ---
+https://www.alibaba.com/product-detail/USB-To-CAN-Analyzer-Compatible-with_1601056080705.html
+
+--- معرّف المنتج ---
+1601056080705
+
+--- العنوان (Subject / schema.org name) ---
+USB To CAN Analyzer Compatible with LIN Bus Debugger Serial Port Transparent
+Offline Transmission
+
+--- المورّد (من JSON-LD / وصف schema.org) ---
+Shenzhen Mingruisheng Technology Co., Ltd.
+
+--- وصف schema.org (نص تسويقي قصير؛ ليس دليلًا تقنيًا) ---
+Usb To Can Analyzer Compatible With Lin Bus Debugger Serial Port Transparent
+Offline Transmission , Find Complete Details about Usb To Can Analyzer
+Compatible With Lin Bus Debugger Serial Port Transparent Offline Transmission
+from Shenzhen Mingruisheng Technology Co., Ltd. Supplier or Manufacturer on
+Alibaba.com
+
+--- مواصفات ظاهرة في بيانات الصفحة (Attributes) ---
+  Place of Origin : Guangdong, China
+  Brand Name      : none
+  Model Number    : szmrs-
+
+--- خيارات SKU (من detailData) ---
+  - With 1.5m USB extension cable * 1
+  - N/A (no extension cable required)
+
+--- روابط صور المنتج (من detailData / schema.org image) ---
+  https://sc04.alicdn.com/kf/H3f938e9432c342bc841ea762873fa4b8Y.jpg
+  https://sc04.alicdn.com/kf/He8fa23743fea49468383e4ed2e2eb7f4k.png
+  https://sc04.alicdn.com/kf/H3c54755706b440929b6c12ce8b7fd172P.jpg
+
+--- صورة غلاف قسم المواصفات (attribute cover) ---
+  https://sc01.alicdn.com/kf/Hcf709c539e4a4b658f806a0cdeb7fac9V.png
+
+================================================================================
+  استخدام مع can_test.py (الاتصال)
+================================================================================
+  • عرض المنافذ:   python3 can_test.py --list-ports
+  • منفذ ثابت:     python3 can_test.py --channel /dev/ttyACM2
+  • عبر البيئة:    export CAN_TEST_CHANNEL=/dev/ttyACM2
+  • إن فشل المنفذ الافتراضي، السكربت يجرّب ttyACM* و ttyUSB* وعدة ttyBitrate
+    (2000000، 115200، 500000، 921600) كما في محوّلات SLCAN الشائعة.
+  • سرعة CAN على الـ bus يجب أن تطابق الفيرموير (حاليًا 500 kbps في المشروع).
+
+================================================================================
+  ملاحظات
+================================================================================
+  • هذه النسخة المحفوظة من الصفحة لا تحتوي على جدول سرعات CAN أو أوامر
+    المنفذ التسلسلي أو شرح ليدات TX/RX؛ معظم المحتوى التقني يأتي عادة من
+    PDF/برنامج البائع.
+  • عبارات «Transparent» و «Offline Transmission» في العنوان تسويقية؛
+    التفسير الدقيق يعتمد على دليل الجهاز أو السوفت وير الرسمي.
+  • للعمل مع Linux/python-can غالبًا يُستخدم وضع SLCAN على /dev/ttyACM*
+    (كما في مشروعك)؛ تأكد من توافق bitrate مع الـ bus (مثلاً 500 kbps).
+
+================================================================================
+  نهاية الملف
+================================================================================

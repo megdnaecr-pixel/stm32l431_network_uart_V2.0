@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "/home/abbdd/FCAN/stm32l431_network_uart_V2.0/stm32l431_network_uart_V1.0/stm32l431_network_uart/Core/Src",
+      "program": "/home/abbdd/FCAN/stm32l431_network_uart_V2.0/stm32l431_network_uart_V1.0/stm32l431_network_uart/Core/Src/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
