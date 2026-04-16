@@ -118,23 +118,23 @@ def open_can_bus():
 
 # ─── قاموس الأوامر الكاملة ──────────────────────────────────
 COMMANDS = {
-    0x01: 'FIRE_On',
-    0x02: 'FIRE_Off',
-    0x03: 'Cmd_On_70S',
-    0x04: 'Cmd_Off_70S',
-    0x05: 'Engine_CMD_On',
-    0x06: 'Engine_CMD_Off',
-    0x07: 'SEP_CMD_On',
-    0x08: 'SEP_CMD_Off',
-    0x09: 'E_CUT_Cmd_On',
-    0x0A: 'E_CUT_Cmd_Off',
-    0x0B: 'ABD_Cmd_On',
-    0x0C: 'ABD_Cmd_Off',
-    0x0D: 'Boost_Off',
-    0x0E: 'Boost_On',
-    0x0F: 'Batt_Off',
-    0x10: 'Tele_Off',
-    0x11: 'Tele_On',
+    0x01: 'CMD_1_On',
+    0x02: 'CMD_1_Off',
+    0x03: 'CMD_2_On',
+    0x04: 'CMD_2_Off',
+    0x05: 'CMD_3_On',
+    0x06: 'CMD_3_Off',
+    0x07: 'CMD_4_On',
+    0x08: 'CMD_4_Off',
+    0x09: 'CMD_5_On',
+    0x0A: 'CMD_5_Off',
+    0x0B: 'CMD_6_On',
+    0x0C: 'CMD_6_Off',
+    0x0D: 'CMD_7_Off',
+    0x0E: 'CMD_7_On',
+    0x0F: 'CMD_8_Off',
+    0x10: 'CMD_9_Off',
+    0x11: 'CMD_9_On',
 }
 
 # قائمة الأوامر مرتبة للاختبار التسلسلي
@@ -406,14 +406,14 @@ def test_all_commands(bus: can.BusABC, delay: float = 0.5):
 def test_pairs(bus: can.BusABC, delay: float = 1.0, verbose: bool = True):
     """اختبار أزواج On/Off بفاصل زمني"""
     pairs = [
-        (0x01, 0x02, 'FIRE'),
-        (0x03, 0x04, 'Cmd_70S'),
-        (0x05, 0x06, 'Engine'),
-        (0x07, 0x08, 'SEP'),
-        (0x09, 0x0A, 'E_CUT'),
-        (0x0B, 0x0C, 'ABD'),
-        (0x0D, 0x0E, 'Boost'),
-        (0x10, 0x11, 'Tele'),
+        (0x01, 0x02, 'CMD_1'),
+        (0x03, 0x04, 'CMD_2'),
+        (0x05, 0x06, 'CMD_3'),
+        (0x07, 0x08, 'CMD_4'),
+        (0x09, 0x0A, 'CMD_5'),
+        (0x0B, 0x0C, 'CMD_6'),
+        (0x0D, 0x0E, 'CMD_7'),
+        (0x10, 0x11, 'CMD_9'),
     ]
     print("\n" + "═"*55)
     print("  🔀 اختبار أزواج On/Off")

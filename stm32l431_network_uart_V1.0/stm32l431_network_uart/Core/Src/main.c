@@ -87,25 +87,25 @@ static GPIO_PinState GetCommandOutputState(uint8_t cmd)
 {
 	switch (cmd)
 	{
-		case FIRE_On:
-		case Cmd_On_70S:
-		case Engine_CMD_On:
-		case SEP_CMD_On:
-		case E_CUT_Cmd_On:
-		case ABD_Cmd_On:
-		case Boost_On:
-		case Tele_On:
+		case CMD_1_On:
+		case CMD_2_On:
+		case CMD_3_On:
+		case CMD_4_On:
+		case CMD_5_On:
+		case CMD_6_On:
+		case CMD_7_On:
+		case CMD_9_On:
 			return GPIO_PIN_SET;
 
-		case FIRE_Off:
-		case Cmd_Off_70S:
-		case Engine_CMD_Off:
-		case SEP_CMD_Off:
-		case E_CUT_Cmd_Off:
-		case ABD_Cmd_Off:
-		case Boost_Off:
-		case Batt_Off:
-		case Tele_Off:
+		case CMD_1_Off:
+		case CMD_2_Off:
+		case CMD_3_Off:
+		case CMD_4_Off:
+		case CMD_5_Off:
+		case CMD_6_Off:
+		case CMD_7_Off:
+		case CMD_8_Off:
+		case CMD_9_Off:
 			return GPIO_PIN_RESET;
 
 		default:

@@ -29,15 +29,15 @@ Every CAN frame carries a 5-byte payload:
 
 | Command | Value | Action |
 |---------|-------|--------|
-| FIRE_On / FIRE_Off | 0x01 / 0x02 | Ignition control |
-| Cmd_On_70S / Cmd_Off_70S | 0x03 / 0x04 | 70-second timer command |
-| Engine_CMD_On / Engine_CMD_Off | 0x05 / 0x06 | Engine command |
-| SEP_CMD_On / SEP_CMD_Off | 0x07 / 0x08 | Separation command |
-| E_CUT_Cmd_On / E_CUT_Cmd_Off | 0x09 / 0x0A | Engine cut command |
-| ABD_Cmd_On / ABD_Cmd_Off | 0x0B / 0x0C | ABD command |
-| Boost_On / Boost_Off | 0x0E / 0x0D | Boost control |
-| Batt_Off | 0x0F | Battery disconnect |
-| Tele_On / Tele_Off | 0x11 / 0x10 | Telemetry control |
+| CMD_1_On / CMD_1_Off | 0x01 / 0x02 | Channel 1 control |
+| CMD_2_On / CMD_2_Off | 0x03 / 0x04 | Channel 2 control |
+| CMD_3_On / CMD_3_Off | 0x05 / 0x06 | Channel 3 control |
+| CMD_4_On / CMD_4_Off | 0x07 / 0x08 | Channel 4 control |
+| CMD_5_On / CMD_5_Off | 0x09 / 0x0A | Channel 5 control |
+| CMD_6_On / CMD_6_Off | 0x0B / 0x0C | Channel 6 control |
+| CMD_7_On / CMD_7_Off | 0x0E / 0x0D | Channel 7 control |
+| CMD_8_Off | 0x0F | Channel 8 off-only |
+| CMD_9_On / CMD_9_Off | 0x11 / 0x10 | Channel 9 control |
 
 On commands set LED1 HIGH; Off commands set it LOW. After executing a command the node transmits an ACK frame (same protocol) on CAN ID `0x100`.
 
