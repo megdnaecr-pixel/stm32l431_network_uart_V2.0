@@ -379,6 +379,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    /* Heartbeat blink: toggle LED1 every 500ms to confirm firmware is running */
+    HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+    HAL_Delay(500);
   }
   /* USER CODE END 3 */
 }
